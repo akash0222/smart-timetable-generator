@@ -21,10 +21,22 @@ const register = async (req, res) => {
             role,
         });
 
-        res.status(201).json({
-            token: generateToken(user._id, user.role),
-            user,
-        });
+        const userResponse = {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive
+};
+
+    return res.status(201).json({
+    success: true,
+    message: "Registration successful",
+    data: {
+        token: generateToken(user._id, user.role),
+        user: userResponse
+    }
+    });
 
     } catch (error) {
 
@@ -56,9 +68,21 @@ const login = async (req, res) => {
                 message: "Invalid Credentials",
             });
 
-        res.json({
-            token: generateToken(user._id, user.role),
-            user,
+        const userResponse = {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+};
+
+        return res.status(200).json({
+        success: true,
+        message: "Login successful",
+        data: {
+        token: generateToken(user._id, user.role),
+        user: userResponse,
+            },
         });
 
     } catch (error) {
